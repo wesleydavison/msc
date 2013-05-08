@@ -4,21 +4,22 @@ args<-commandArgs(TRUE)
 #listing files
 files<-list.files(path = args[1], full.names = TRUE)
 #preparing output
-cat("file_name,mean_iat,stdev_iat,mean_proc_time,stdev_proc_time\n", file = "stats.out", append = TRUE, sep = ",")
+cat("file_name,mean_proc,stdev_proc,coef_var_proc\n", file = "stats.out", append = TRUE, sep = ",")
 
 #iterating over files
 for(i in seq(along=files)){
     #print(files[i])
     data=read.csv(files[i], sep=",")
 
-    mean_iat<-mean(data$inter_arriv_time)
-    stdev_iat<-sd(data$inter_arriv_time)
+    #mean_iat<-mean(data$inter_arriv_time)
+    #stdev_iat<-sd(data$inter_arriv_time)
 
-    mean_proc_time<-mean(data$process_time)
-    stdev_proc_time<-sd(data$process_time)
+    mean_proc<-mean(data$process_time)
+    stdev_proc<-sd(data$process_time)
+    coef_var_proc<-(stdev_proc/mean_proc)
 
 #writing on file
-    cat(files[i],mean_iat,stdev_iat,mean_proc_time,stdev_proc_time, file = "stats.out", append = TRUE, sep = ",")
+    cat(files[i],mean_proc,stdev_proc,coef_var_proc, file = "stats.out", append = TRUE, sep = ",")
     cat("\n", file = "stats.out", append = TRUE, sep = "") #gambiarra necessaria
     
 #save(cor_size_rate,cor_size_duration,cor_duration_rate, file = "file1.Rdata", ascii = TRUE)

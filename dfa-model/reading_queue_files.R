@@ -4,7 +4,7 @@ args<-commandArgs(TRUE)
 #listing files
 files<-list.files(path = args[1], full.names = TRUE)
 #preparing output
-cat("file_name,mean_proc,stdev_proc,coef_var_proc,possible_distr,param1,param2\n", file = "stats.out", append = TRUE, sep = ",")
+cat("file_name,mean_proc,stdev_proc,coef_var_proc,possible_distr,mi_param,k_param2\n", file = "stats.out", append = TRUE, sep = ",")
 
 #iterating over files
 for(i in seq(along=files)){
@@ -28,6 +28,7 @@ for(i in seq(along=files)){
     }
     else{
         distr <- "expo"
+        mi_param <- ( 1 / mean_proc )
     }
 
 #writing on file
@@ -35,10 +36,10 @@ for(i in seq(along=files)){
         cat(files[i],mean_proc,stdev_proc,coef_var_proc,distr,0,0, file = "stats.out", append = TRUE, sep = ",")
     }
     else if(distr == "erlang" ){
-        cat(files[i],mean_proc,stdev_proc,coef_var_proc,distr,k_param,mi_param,file = "stats.out", append = TRUE, sep = ",")
+        cat(files[i],mean_proc,stdev_proc,coef_var_proc,distr,mi_param,k_param,file = "stats.out", append = TRUE, sep = ",")
     }
-    else{
-        cat(files[i],mean_proc,stdev_proc,coef_var_proc,distr,0,0, file = "stats.out", append = TRUE, sep = ",")
+    else{ #expo
+        cat(files[i],mean_proc,stdev_proc,coef_var_proc,distr,mi_param,0, file = "stats.out", append = TRUE, sep = ",")
     }
     cat("\n", file = "stats.out", append = TRUE, sep = "") #gambiarra necessaria
     

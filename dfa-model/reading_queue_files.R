@@ -2,13 +2,13 @@
 #data$ini_sec,data$end_sec,data$ini_mic,data$end_mic,data$src_ip,data$dst_ip,data$src_port,data$dst_port,data$n_bytes,data$n_frames,data$app,data$transp_prot
 args<-commandArgs(TRUE)
 #listing files
-files<-list.files()
+files<-list.files(path = args[1], full.names = TRUE)
 #preparing output
 cat("file_name,mean_iat,stdev_iat,mean_proc_time,stdev_proc_time\n", file = "stats.out", append = TRUE, sep = ",")
 
 #iterating over files
 for(i in seq(along=files)){
-    print(files[i])
+    #print(files[i])
     data=read.csv(files[i], sep=",")
 
     mean_iat<-mean(data$inter_arriv_time)

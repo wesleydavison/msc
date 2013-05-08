@@ -4,7 +4,7 @@ args<-commandArgs(TRUE)
 #listing files
 files<-list.files(path = args[1], full.names = TRUE)
 #preparing output
-cat("file_name,mean_proc,stdev_proc,coef_var_proc\n", file = "stats.out", append = TRUE, sep = ",")
+cat("file_name,mean_proc,stdev_proc,coef_var_proc,possible_distr\n", file = "stats.out", append = TRUE, sep = ",")
 
 #iterating over files
 for(i in seq(along=files)){
@@ -18,8 +18,18 @@ for(i in seq(along=files)){
     stdev_proc<-sd(data$process_time)
     coef_var_proc<-(stdev_proc/mean_proc)
 
+    if(coef_var_proc < 1){
+        distr <- "hyper"
+    }
+    else if(coef_var_proc > 1){
+        distr <- "erlang"
+    }
+    else{
+        distr <- "expo"
+    }
+
 #writing on file
-    cat(files[i],mean_proc,stdev_proc,coef_var_proc, file = "stats.out", append = TRUE, sep = ",")
+    cat(files[i],mean_proc,stdev_proc,coef_var_proc,distr, file = "stats.out", append = TRUE, sep = ",")
     cat("\n", file = "stats.out", append = TRUE, sep = "") #gambiarra necessaria
     
 #save(cor_size_rate,cor_size_duration,cor_duration_rate, file = "file1.Rdata", ascii = TRUE)

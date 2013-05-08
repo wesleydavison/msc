@@ -1,6 +1,6 @@
 #this script aims to extract correlations from output traces
 #data$ini_sec,data$end_sec,data$ini_mic,data$end_mic,data$src_ip,data$dst_ip,data$src_port,data$dst_port,data$n_bytes,data$n_frames,data$app,data$transp_prot
-
+args<-commandArgs(TRUE)
 #listing files
 files<-list.files()
 #preparing output
